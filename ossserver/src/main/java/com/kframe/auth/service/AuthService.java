@@ -151,6 +151,7 @@ public class AuthService extends BaseService implements IAuthSevice {
 		return RetCodes.retCode(VERIFY_CODE_CREATE_ERROR);
 	}
 
+	
 	@Override
 	public RetResult<String> login(LoginBean bean) {
 		boolean result = verifyCodeRepository.exitsCode(bean.getVerifycode(), System.currentTimeMillis());
