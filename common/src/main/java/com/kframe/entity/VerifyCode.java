@@ -1,7 +1,11 @@
 package com.kframe.entity;
 
+import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import com.kframe.annotations.Comment;
@@ -9,6 +13,7 @@ import com.kframe.annotations.Comment;
 @Comment("验证码")
 @Entity
 @Table(name = "verifycode")
+@Cacheable
 public class VerifyCode extends BaseSimpleEntity {
 
 	/**
@@ -29,6 +34,8 @@ public class VerifyCode extends BaseSimpleEntity {
 	
 	
 	@Comment("base64image内容")
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
 	@Column(name ="base64image")
 	private String base64image;
 

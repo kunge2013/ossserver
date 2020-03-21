@@ -36,16 +36,13 @@ public class HttpAspect {
  
     @Around("log()")
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        RetResult<?> result = null;
+    	Object result = null;
         try {
+        	result = proceedingJoinPoint.proceed();
         } catch (Exception e) {
             return exceptionHandle.errorHandler(e);
         }
-        if(result == null){
-            return proceedingJoinPoint.proceed();
-        } else {
-            return result;
-        }
+        return result;
     }
  
     @AfterReturning(pointcut = "log()",returning = "object")//打印输出结果

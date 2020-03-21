@@ -22,6 +22,9 @@ public class RetCodes {
 	
 	@Comment("校验码生成失败")
 	public static final int VERIFY_CODE_CREATE_ERROR = 30001;
+	
+	@Comment("无效的校验码")
+	public static final int EFFICETIVE_VERIFYCODE = 30002;
 	/**
 	 * 錯誤嗎
 	 * @param retcode

@@ -82,8 +82,25 @@ public class UserInfo extends BaseSimpleEntity implements UserDetails, Serializa
     
     @Comment("用户状态 2 启用 4 禁用 ")
 	@Column(name = "status")
-    private short status;
+    private Short status;
     
+    
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
+	}
+
 	public short getSex() {
 		return sex;
 	}

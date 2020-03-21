@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.kframe.entity.VerifyCode;
@@ -16,8 +17,11 @@ import com.kframe.entity.VerifyCode;
 @Repository
 public interface VerifyCodeRepository extends JpaRepository<VerifyCode, Serializable>{
 
-	@Query(" select t from VerifyCode t where t.code =: code and expiretime <=: expiretime")
-	public List<VerifyCode> queryVerifyCodes(String code, long expiretime);
+	@Query(" select t from VerifyCode t where t.code = :code and expiretime <= :expiretime")
+	public List<VerifyCode> queryVerifyCodes(@Param(value = "code") String code, @Param(value = "expiretime") long expiretime);
+	
+	@Query(" select count(t) from VerifyCode t where t.code = :code and expiretime <= :expiretime")
+	public int countVerifyCodes(@Param(value = "code") String code, @Param(value = "expiretime") long expiretime);
 	
 	/**
 	 * 校验验证码是否过期
@@ -25,8 +29,7 @@ public interface VerifyCodeRepository extends JpaRepository<VerifyCode, Serializ
 	 * @param expiretime
 	 * @return
 	 */
-	public default  boolean exitsCode(String code, long expiretime) {
-		List<VerifyCode> verifycodes = queryVerifyCodes(code, expiretime);
-		return verifycodes != null && verifycodes.size() > 0;
+	 default public boolean exitsCode(String code, long expiretime) {
+		return countVerifyCodes(code, expiretime) > 0;
 	}
 }
