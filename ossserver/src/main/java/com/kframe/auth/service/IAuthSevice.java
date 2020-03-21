@@ -10,6 +10,7 @@ import com.kframe.entity.UserInfo;
  *
  */
 import com.kframe.entity.VerifyCode;
+import com.kframe.oss.bean.LoginBean;
 public interface IAuthSevice {
 	
 	/**
@@ -18,6 +19,13 @@ public interface IAuthSevice {
 	 * @return 返回token
 	 */
 	public RetResult<String> login(UserInfo userinfo);
+	
+	/**
+	 * @param userinfo 用户信息
+	 * @param verifyCode 验证码
+	 * @return
+	 */
+	public RetResult<String> login(LoginBean bean);
 	
 	/**
 	 * 校验token

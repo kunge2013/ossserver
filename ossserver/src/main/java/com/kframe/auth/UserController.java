@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +18,7 @@ import com.kframe.common.RetResult;
 import com.kframe.entity.UserInfo;
 import com.kframe.entity.VerifyCode;
 import com.kframe.exceptions.BizException;
+import com.kframe.oss.bean.LoginBean;
 
 @RestController
 public class UserController {
@@ -35,7 +38,13 @@ public class UserController {
 		return authService.login(new UserInfo(username, password));
 	}
 	
+	@ResponseBody
+	@PostMapping("/loginverifycode")
+	public RetResult<String> loginverifycode(@RequestBody LoginBean bean) {
+		return authService.login(bean);
+	}
 
+	
 	@ResponseBody
 	@GetMapping("/checkLoginStatus")
 	public RetResult checkLoginStatus(@RequestHeader(name = "userid") int userid,

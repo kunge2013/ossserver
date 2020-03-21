@@ -1,7 +1,10 @@
 package com.kframe.auth.service;
 
+import static com.kframe.common.RetCodes.EFFICETIVE_VERIFYCODE;
 import static com.kframe.common.RetCodes.LOGIN_FAIL;
 import static com.kframe.common.RetCodes.USER_REGISTER_FAIL;
+import static com.kframe.common.RetCodes.VERIFY_CODE_CREATE_ERROR;
+import static com.kframe.common.RetCodes.retCode;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -24,11 +27,12 @@ import com.kframe.auth.JwtConstant;
 import com.kframe.auth.JwtService;
 import com.kframe.common.BaseService;
 import com.kframe.common.RetCodes;
-import static com.kframe.common.RetCodes.*;
 import com.kframe.common.RetResult;
 import com.kframe.entity.UserInfo;
 import com.kframe.entity.VerifyCode;
+import com.kframe.oss.bean.LoginBean;
 import com.kframe.repositorys.UserRepository;
+import com.kframe.repositorys.VerifyCodeRepository;
 
 /**
  * 签权配置
@@ -44,6 +48,9 @@ public class AuthService extends BaseService implements IAuthSevice {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Resource
+	private VerifyCodeRepository verifyCodeRepository;
+	
 	@Resource
 	private PasswordEncoder passwordEncoder;
 	
@@ -134,7 +141,9 @@ public class AuthService extends BaseService implements IAuthSevice {
 			ImageIO.write(image, "jpg", outputStream);
 			byte[] data = outputStream.toByteArray();
 			String base64image = String.format(BASE64_PREFIX_FORMAT, Base64.getEncoder().encodeToString(data));
-			return RetResult.success(VerifyCode.from(code, base64image));
+			VerifyCode verifyCode = VerifyCode.from(code, base64image);
+			verifyCodeRepository.save(verifyCode);
+			return RetResult.success(verifyCode);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -142,5 +151,14 @@ public class AuthService extends BaseService implements IAuthSevice {
 		return RetCodes.retCode(VERIFY_CODE_CREATE_ERROR);
 	}
 
-
+	@Override
+	public RetResult<String> login(LoginBean bean) {
+		boolean result = verifyCodeRepository.exitsCode(bean.getVerifycode(), System.currentTimeMillis());
+		// 验证码有效性校验
+		if(!result)  {
+			return retCode(EFFICETIVE_VERIFYCODE);
+		}
+		return login(bean.copy());
+	}
+	
 }
