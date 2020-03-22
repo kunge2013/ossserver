@@ -154,9 +154,8 @@ public class AuthService extends BaseService implements IAuthSevice {
 	
 	@Override
 	public RetResult<String> login(LoginBean bean) {
-		boolean result = verifyCodeRepository.exitsCode(bean.getVerifycode(), System.currentTimeMillis());
 		// 验证码有效性校验
-		if(!result)  {
+		if(!verifyCodeRepository.exitsCode(bean.getVerifycode(), System.currentTimeMillis()))  {
 			return retCode(EFFICETIVE_VERIFYCODE);
 		}
 		return login(bean.copy());
