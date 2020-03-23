@@ -1,7 +1,10 @@
 package com.kframe.common;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -11,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
+import com.kframe.entity.Base;
 import com.kframe.repositorys.BaseRepostory;
 
 @Transactional
@@ -18,13 +22,20 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 
 	protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	@Resource
-	protected BaseRepostory<T, ID> repository;
+	protected  BaseRepostory<T , ID> repository;
 
+	public BaseService(BaseRepostory repository) {
+		this.repository = repository;
+	}
+	
+	public BaseService() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	@Resource
-	private EntityManager entityManager;
+	protected EntityManager entityManager;
 
-	public  Page<T> queryPage(PageInfo pageinfo, T t) {
+	public Page<T> queryPage(PageInfo pageinfo, T t) {
 		Pageable pageable = null;
 		if (pageinfo.fetchQuerySorts() == null) {
 			pageable = PageRequest.of(pageinfo.getPage(), pageinfo.getSize());
@@ -38,9 +49,22 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 		return repository.findAll(createSpecification(t), pageable);
 	}
 
-	
 	protected Specification<T> createSpecification(T t) {
 		return null;
 	}
+
+	public <F> Page<F> pageBySql(F f) {
+		return null;
+	}
 	
+	 /**
+     * 给hql参数设置值
+     * @param query 查询
+     * @param params 参数
+     */
+	protected void setParameters(Query query,Map<String,Object> params){
+        for(Map.Entry<String,Object> entry:params.entrySet()){
+            query.setParameter(entry.getKey(),entry.getValue());
+        }
+    }
 }

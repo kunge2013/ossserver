@@ -2,7 +2,7 @@ package com.kframe.common;
 
 public class PageInfo {
 
-	private int page = 1;
+	private int page = 0;
 
 	private int size = 10;
 

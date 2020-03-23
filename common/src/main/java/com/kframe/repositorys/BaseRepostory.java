@@ -12,8 +12,10 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @param <T>
  * @param <ID>
  */
+
+import com.kframe.entity.Base;
 @NoRepositoryBean
-public interface BaseRepostory<T, ID> extends JpaRepository<T, ID> {
+public interface BaseRepostory<T , ID> extends JpaRepository<T, ID> {
 	
     Page<T> findAll(Specification<T> spec, Pageable pageable);
 }

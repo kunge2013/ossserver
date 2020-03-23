@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kframe.annotations.Comment;
 @Comment("自增类型 基础实体")
 @MappedSuperclass
-public abstract class BaseSimpleEntity implements Serializable {
+public abstract class BaseSimpleEntity extends Base  implements Serializable {
 
 	/**
 	 * 
