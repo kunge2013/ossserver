@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +15,7 @@ import com.kframe.entity.UserInfo;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<UserInfo, Serializable> {
+public interface UserRepository extends BaseRepostory<UserInfo, Serializable> {
 	/**
 	 * 统计 当前用户是否已经注册
 	 * @param mobile
@@ -40,5 +41,9 @@ public interface UserRepository extends JpaRepository<UserInfo, Serializable> {
 	@Comment("查看当前用户是否存在")
 	default boolean existsByUsername(String username) {
 		return countByUsername(username) > 0;
+	}
+	
+	default public Page<UserInfo> page() {
+		return null;
 	}
 }
