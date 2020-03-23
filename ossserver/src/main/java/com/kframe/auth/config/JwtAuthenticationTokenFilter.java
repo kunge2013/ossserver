@@ -48,11 +48,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 		String username = "";
 		UserInfo userinfo = null;
 		LOGGER.info("headers  {}  , auth = {} ", request.getHeaderNames(), auth);
-		if ("/api/verifyCode".equalsIgnoreCase(url)) {
+		if ("/oss/api/verifyCode".equalsIgnoreCase(url)) {
 			chain.doFilter(request, response);//放行
 			return;
 		}
-		if (!"/login".equalsIgnoreCase(url) &&!auth.isEmpty()) {
+		if (!"/oss/login".equalsIgnoreCase(url) &&!auth.isEmpty()) {
 			userinfo = jwtService.parseUserInfo(auth);
 			username = userinfo.getUsername();
 			LOGGER.info("Checking authentication for user {}.", username);
