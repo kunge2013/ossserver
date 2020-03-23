@@ -20,4 +20,5 @@ public interface IUserService extends IBaseService<UserInfo, Long> {
 	 */
 	public void remove(UserInfo userInfo);
 	
+	
 }
