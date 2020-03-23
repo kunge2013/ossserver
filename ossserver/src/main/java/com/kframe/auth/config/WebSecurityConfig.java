@@ -75,8 +75,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 // 对于获取token的rest api要允许匿名访问
-				.antMatchers("/oss/api/verifyCode","/favicon.ico","/oss/loginverifycode").permitAll()
-                .antMatchers("/oss/login").permitAll()
+				.antMatchers(
+						"/api/verifyCode"
+						,"/favicon.ico"
+						,"/loginverifycode"
+						,"/api/login").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
 
@@ -110,7 +113,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
         filter.setAuthenticationFailureHandler(authenticationFailureHandler);
        //  filter.getFilterConfig().
-        filter.setFilterProcessesUrl("/login"); // 设置登陆接口名
+        filter.setFilterProcessesUrl("/api/login"); // 设置登陆接口名
         //这句很关键，重用WebSecurityConfigurerAdapter配置的AuthenticationManager，不然要自己组装AuthenticationManager
         filter.setAuthenticationManager(authenticationManagerBean());
         return filter;

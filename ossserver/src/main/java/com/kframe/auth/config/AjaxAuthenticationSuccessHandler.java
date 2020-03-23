@@ -38,7 +38,9 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
 		 	response.setCharacterEncoding("utf-8");
 		 	response.setContentType("application/json; charset=utf-8");
 		 	response.addHeader("token", token);
-		 	response.addCookie(new Cookie("token", token));
+		 	Cookie cookie = new Cookie("token", token);
+		 	cookie.setPath("/");//同一个域名下面path 为空
+		 	response.addCookie(cookie);
 	        response.getWriter().write(JSON.toJSONString(RetResult.success(token)));
 	    }
 }

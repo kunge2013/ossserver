@@ -36,7 +36,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		/**
 		 * 登录校验过滤
 		 */
-		if ("/login".equalsIgnoreCase(url)) {
+		if ("/oss/api/login".equalsIgnoreCase(url)) {
 			UsernamePasswordAuthenticationToken authRequest = null;
 			username =request.getParameter("username");
 			password =request.getParameter("password");

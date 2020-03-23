@@ -37,7 +37,7 @@ public class UserController {
 	 * @param password 密码
 	 */
 	@ResponseBody
-	@GetMapping("/login")
+	@GetMapping("/oss/login2")
 	public RetResult<String> login(@RequestParam String username, @RequestParam String password) {
 		return authService.login(new UserInfo(username, password));
 	}
