@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kframe.annotations.Comment;
 import com.kframe.auth.service.IAuthSevice;
+import com.kframe.auth.service.IUserService;
+import com.kframe.common.PageInfo;
 import com.kframe.common.RetResult;
 import com.kframe.entity.UserInfo;
 import com.kframe.entity.VerifyCode;
@@ -26,6 +28,8 @@ public class UserController {
 	@Autowired
 	private IAuthSevice authService;
 
+	@Autowired
+	private IUserService userService;
 	/**
 	 * 登录认证
 	 * 
@@ -78,4 +82,5 @@ public class UserController {
 	public String test() {
 		throw new BizException(1000, "test exception !");
 	}
+	
 }

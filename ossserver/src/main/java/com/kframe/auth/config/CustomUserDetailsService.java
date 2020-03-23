@@ -2,6 +2,8 @@ package com.kframe.auth.config;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,9 +16,12 @@ import com.kframe.exceptions.BizException;
 import com.kframe.repositorys.UserRepository;
 
 @Component(value = "CustomUserDetailsService")
-public class CustomUserDetailsService extends BaseService implements UserDetailsService {
+public class CustomUserDetailsService  implements UserDetailsService {
+	
 	UserRepository userRepository;
-
+	
+	protected  final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	
 	/**
 	 * 查询当前用户是否存在
 	 */

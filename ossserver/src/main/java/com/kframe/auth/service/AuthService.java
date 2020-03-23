@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,8 +42,11 @@ import com.kframe.repositorys.VerifyCodeRepository;
  * @author fk
  */
 @Service
-public class AuthService extends BaseService implements IAuthSevice {
+public class AuthService implements IAuthSevice {
 
+	protected  final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
+	
 	@Autowired
 	private StringRedisTemplate redisTemplate;
 

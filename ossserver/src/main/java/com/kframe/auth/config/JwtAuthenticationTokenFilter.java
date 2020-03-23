@@ -52,7 +52,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 			chain.doFilter(request, response);//放行
 			return;
 		}
-		if (!auth.isEmpty()) {
+		if (!"/login".equalsIgnoreCase(url) &&!auth.isEmpty()) {
 			userinfo = jwtService.parseUserInfo(auth);
 			username = userinfo.getUsername();
 			LOGGER.info("Checking authentication for user {}.", username);
