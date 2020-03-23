@@ -4,7 +4,7 @@ eureka:
     refresh:
       enable: true
     serviceUrl:
-      defaultZone: http://127.0.0.1:8761/eureka/
+      defaultZone: http://127.0.0.1:8761/eureka/,http://66.42.39.36:8761/eureka/
     register-with-eureka: true
     
   instance:
@@ -16,7 +16,7 @@ spring:
     name: authservice
   datasource:
     name: eurekaauth
-    url:  jdbc:mysql://localhost:3306/eurekaauth?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&serverTimezone=UTC&allowMultiQueries=true
+    url:  jdbc:mysql://localhost:3306/eurekaoss?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE&serverTimezone=UTC&allowMultiQueries=true
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
