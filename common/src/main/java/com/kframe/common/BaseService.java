@@ -28,10 +28,6 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 		this.repository = repository;
 	}
 	
-	public BaseService() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	@Resource
 	protected EntityManager entityManager;
 
