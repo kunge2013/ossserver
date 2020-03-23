@@ -23,6 +23,9 @@ public interface VerifyCodeRepository extends JpaRepository<VerifyCode, Serializ
 	@Query(" select count(t) from VerifyCode t where t.code = :code and expiretime <= :expiretime")
 	public int countVerifyCodes(@Param(value = "code") String code, @Param(value = "expiretime") long expiretime);
 	
+	@Query(" delete from VerifyCode t where t.code = :code and expiretime <= :expiretime")
+	public int removeVerifyCodes(@Param(value = "code") String code, @Param(value = "expiretime") long expiretime);
+	
 	/**
 	 * 校验验证码是否过期
 	 * @param code
@@ -30,6 +33,8 @@ public interface VerifyCodeRepository extends JpaRepository<VerifyCode, Serializ
 	 * @return
 	 */
 	 default public boolean exitsCode(String code, long expiretime) {
-		return countVerifyCodes(code, expiretime) > 0;
+		 boolean result = countVerifyCodes(code, expiretime) > 0;
+		 if (result) removeVerifyCodes(code, expiretime); //删除已经验证的验证码
+		return result;
 	}
 }
