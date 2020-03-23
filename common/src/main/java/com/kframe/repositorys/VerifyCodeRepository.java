@@ -15,7 +15,7 @@ import com.kframe.entity.VerifyCode;
  *
  */
 @Repository
-public interface VerifyCodeRepository extends JpaRepository<VerifyCode, Serializable>{
+public interface VerifyCodeRepository extends JpaRepository<VerifyCode, Serializable> {
 
 	@Query(" select t from VerifyCode t where t.code = :code and expiretime <= :expiretime")
 	public List<VerifyCode> queryVerifyCodes(@Param(value = "code") String code, @Param(value = "expiretime") long expiretime);
