@@ -47,6 +47,28 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 		String auth = request.getHeader(this.tokenheader) == null ? fetchCookieVal(tokenheader, request) : request.getHeader(this.tokenheader);
 		String username = "";
 		UserInfo userinfo = null;
+		
+	 
+	        // 不使用*，自动适配跨域域名，避免携带Cookie时失效
+	        String origin = request.getHeader("Origin");
+	        if(origin != null && !origin.isEmpty()) {
+	            response.setHeader("Access-Control-Allow-Origin", origin);
+	        }
+	 
+	        // 自适应所有自定义头
+	        String headers = request.getHeader("Access-Control-Request-Headers");
+	        if(headers != null) {
+	            response.setHeader("Access-Control-Allow-Headers", headers);
+	            response.setHeader("Access-Control-Expose-Headers", headers);
+	        }
+	 
+	        // 允许跨域的请求方法类型
+	        response.setHeader("Access-Control-Allow-Methods", "*");
+	        // 预检命令（OPTIONS）缓存时间，单位：秒
+	        response.setHeader("Access-Control-Max-Age", "3600");
+	        // 明确许可客户端发送Cookie，不允许删除字段即可
+	        response.setHeader("Access-Control-Allow-Credentials", "true");
+
 		LOGGER.info("headers  {}  , auth = {} ", request.getHeaderNames(), auth);
 		if ("/oss/api/verifyCode".equalsIgnoreCase(url)) {
 			chain.doFilter(request, response);//放行

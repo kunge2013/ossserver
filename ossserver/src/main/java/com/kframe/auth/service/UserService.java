@@ -1,27 +1,21 @@
 package com.kframe.auth.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.kframe.bean.PageInfo;
 import com.kframe.common.BaseService;
-import com.kframe.common.PageInfo;
 import com.kframe.common.RetResult;
 import com.kframe.entity.Role;
 import com.kframe.entity.UserInfo;
@@ -51,28 +45,28 @@ public class UserService extends BaseService<UserInfo, Long> implements IUserSer
 	}
 
 
-	@Override
-	protected Specification<UserInfo> createSpecification(UserInfo userinfo) {
-		Specification<UserInfo> specification = new Specification<UserInfo>() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -1151214153523166032L;
-
-			@Override
-			public Predicate toPredicate(Root<UserInfo> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-				List<Predicate> predicates = new ArrayList<>();
-				String username = userinfo.getUsername();
-				if (username != null && !username.isEmpty()) {
-					Predicate likeName = criteriaBuilder.like(root.get("username").as(String.class), username + "%");
-					predicates.add(likeName);
-				}
-				return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-			}
-
-		};
-		return specification;
-	}
+//	@Override
+//	protected Specification<UserInfo> createSpecification(UserInfo userinfo) {
+//		Specification<UserInfo> specification = new Specification<UserInfo>() {
+//			/**
+//			 * 
+//			 */
+//			private static final long serialVersionUID = -1151214153523166032L;
+//
+//			@Override
+//			public Predicate toPredicate(Root<UserInfo> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+//				List<Predicate> predicates = new ArrayList<>();
+//				String username = userinfo.getUsername();
+//				if (username != null && !username.isEmpty()) {
+//					Predicate likeName = criteriaBuilder.like(root.get("username").as(String.class), username + "%");
+//					predicates.add(likeName);
+//				}
+//				return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+//			}
+//
+//		};
+//		return specification;
+//	}
 
 	private Page<Role> pageRole(PageInfo pageInfo, Role role) {
 		StringBuilder countSelectSql = new StringBuilder();
