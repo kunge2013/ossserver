@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.kframe.bean.PageData;
 import com.kframe.bean.PageInfo;
 import com.kframe.common.BaseService;
 import com.kframe.common.RetResult;
