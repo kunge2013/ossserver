@@ -3,7 +3,13 @@ package com.kframe.bean;
 import static org.springframework.data.domain.Sort.*;
 
 import org.springframework.data.domain.Sort;
-
+/**
+ * 分页查询条件
+ * 
+ * @author fk
+ *
+ * @param <T>
+ */
 public class PageInfo<T> {
 
 	private int page = 0;
