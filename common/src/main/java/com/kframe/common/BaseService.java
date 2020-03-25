@@ -30,12 +30,12 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 
 	protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	protected  BaseRepostory<T , ID> repository;
+	protected BaseRepostory<T, ID> repository;
 
 	public BaseService(BaseRepostory repository) {
 		this.repository = repository;
 	}
-	
+
 	@Resource
 	protected EntityManager entityManager;
 
@@ -74,15 +74,16 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 	public <F> Page<F> pageBySql(F f) {
 		return null;
 	}
-	
-	 /**
-     * 给hql参数设置值
-     * @param query 查询
-     * @param params 参数
-     */
-	protected void setParameters(Query query,Map<String,Object> params){
-        for(Map.Entry<String,Object> entry:params.entrySet()){
-            query.setParameter(entry.getKey(),entry.getValue());
-        }
-    }
+
+	/**
+	 * 给hql参数设置值
+	 * 
+	 * @param query  查询
+	 * @param params 参数
+	 */
+	protected void setParameters(Query query, Map<String, Object> params) {
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			query.setParameter(entry.getKey(), entry.getValue());
+		}
+	}
 }
