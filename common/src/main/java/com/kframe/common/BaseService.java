@@ -29,16 +29,16 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 
 	protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
-	protected BaseRepostory<T, ID> repository;
+	protected  final BaseRepostory<T, ID> repository;
 
-	public BaseService( BaseRepostory repository ) {
+	public BaseService( final BaseRepostory repository ) {
 		this.repository = repository;
 	}
 
 	@Resource
 	protected EntityManager entityManager;
 
-	public final PageData<T> queryPage( PageInfo<T> pageinfo ) {
+	public  PageData<T> queryPage( PageInfo<T> pageinfo ) {
 		Pageable pageable = null;
 		if (pageinfo.fetchQuerySorts() == null) {
 			pageable = PageRequest.of(pageinfo.getPage(), pageinfo.getSize());
