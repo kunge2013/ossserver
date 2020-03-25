@@ -1,17 +1,21 @@
 package com.kframe.bean;
 
+import static org.springframework.data.domain.Sort.*;
+
+import org.springframework.data.domain.Sort;
+
 public class PageInfo<T> {
 
 	private int page = 0;
 
 	private int size = 10;
 
-	private Sort asc;
+	private SortField asc;
 
-	private Sort desc;
+	private SortField desc;
 
 	private T bean;
-	
+
 	public T getBean() {
 		return bean;
 	}
@@ -20,19 +24,19 @@ public class PageInfo<T> {
 		this.bean = bean;
 	}
 
-	public Sort getAsc() {
+	public SortField getAsc() {
 		return asc;
 	}
 
-	public void setAsc(Sort asc) {
+	public void setAsc(SortField asc) {
 		this.asc = asc;
 	}
 
-	public Sort getDesc() {
+	public SortField getDesc() {
 		return desc;
 	}
 
-	public void setDesc(Sort desc) {
+	public void setDesc(SortField desc) {
 		this.desc = desc;
 	}
 
@@ -54,21 +58,15 @@ public class PageInfo<T> {
 
 	/**
 	 * 获取排序字段
+	 * 
 	 * @return
 	 */
-	public org.springframework.data.domain.Sort fetchQuerySorts() {
-		org.springframework.data.domain.Sort sort = null;
-		if (asc != null)
-			sort = org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.ASC,
-					asc.fields);
+	public Sort fetchQuerySorts() {
+		Sort sort = null;
+		if (asc != null) sort = by(Direction.ASC, asc.fields);
 		if (desc != null) {
-			if (sort == null) {
-				sort = org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC,
-						desc.fields);
-				return sort;
-			}
-			return sort.and(org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC,
-					desc.fields));
+			if (sort == null) return by(Direction.DESC, desc.fields);
+			return sort.and(by(Direction.DESC, desc.fields));
 		}
 		return null;
 	}
@@ -79,10 +77,9 @@ public class PageInfo<T> {
 	 * @author fk
 	 *
 	 */
-	public static class Sort {
+	public static class SortField {
 
 		private String[] fields;
-
 
 		public String[] getFields() {
 			return fields;

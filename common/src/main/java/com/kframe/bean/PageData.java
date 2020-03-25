@@ -2,7 +2,7 @@ package com.kframe.bean;
 
 import java.util.List;
 
-import com.kframe.bean.PageInfo.Sort;
+import com.kframe.bean.PageInfo.SortField;
 
 /**
  * 分页对象
@@ -16,9 +16,9 @@ public class PageData<T> {
 
 	private int size = 10;
 
-	private Sort asc;
+	private SortField asc;
 
-	private Sort desc;
+	private SortField desc;
 
 	private List<T> rows;
 
@@ -48,19 +48,19 @@ public class PageData<T> {
 		this.size = size;
 	}
 
-	public Sort getAsc() {
+	public SortField getAsc() {
 		return asc;
 	}
 
-	public void setAsc(Sort asc) {
+	public void setAsc(SortField asc) {
 		this.asc = asc;
 	}
 
-	public Sort getDesc() {
+	public SortField getDesc() {
 		return desc;
 	}
 
-	public void setDesc(Sort desc) {
+	public void setDesc(SortField desc) {
 		this.desc = desc;
 	}
 

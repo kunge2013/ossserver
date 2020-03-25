@@ -22,7 +22,6 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.kframe.bean.PageData;
 import com.kframe.bean.PageInfo;
-import com.kframe.entity.UserInfo;
 import com.kframe.repositorys.BaseRepostory;
 
 @Transactional
@@ -39,7 +38,7 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 	@Resource
 	protected EntityManager entityManager;
 
-	public PageData<T> queryPage(PageInfo<T> pageinfo) {
+	public final PageData<T> queryPage(PageInfo<T> pageinfo) {
 		Pageable pageable = null;
 		if (pageinfo.fetchQuerySorts() == null) {
 			pageable = PageRequest.of(pageinfo.getPage(), pageinfo.getSize());
