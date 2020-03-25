@@ -1,10 +1,16 @@
 package com.kframe.common;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -14,6 +20,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
+import com.kframe.bean.PageData;
+import com.kframe.bean.PageInfo;
+import com.kframe.entity.UserInfo;
 import com.kframe.repositorys.BaseRepostory;
 
 @Transactional
@@ -30,7 +39,7 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 	@Resource
 	protected EntityManager entityManager;
 
-	public Page<T> queryPage(PageInfo pageinfo, T t) {
+	public PageData<T> queryPage(PageInfo<T> pageinfo) {
 		Pageable pageable = null;
 		if (pageinfo.fetchQuerySorts() == null) {
 			pageable = PageRequest.of(pageinfo.getPage(), pageinfo.getSize());
@@ -41,11 +50,25 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 			LOGGER.error("repostory not init ...");
 			throw new UnsupportedOperationException("repostory not init ...");
 		}
-		return repository.findAll(createSpecification(t), pageable);
+		Page<T> page = repository.findAll(createSpecification(pageinfo.getBean()), pageable);
+		return PageData.from(pageinfo, page.getContent(), page.getTotalElements());
 	}
 
 	protected Specification<T> createSpecification(T t) {
-		return null;
+		Specification<T> specification = new Specification<T>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -1151214153523166032L;
+
+			@Override
+			public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+				List<Predicate> predicates = new ArrayList<>();
+				return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+			}
+
+		};
+		return specification;
 	}
 
 	public <F> Page<F> pageBySql(F f) {

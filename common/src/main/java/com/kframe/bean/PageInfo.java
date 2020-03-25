@@ -1,6 +1,6 @@
-package com.kframe.common;
+package com.kframe.bean;
 
-public class PageInfo {
+public class PageInfo<T> {
 
 	private int page = 0;
 
@@ -9,6 +9,32 @@ public class PageInfo {
 	private Sort asc;
 
 	private Sort desc;
+
+	private T bean;
+	
+	public T getBean() {
+		return bean;
+	}
+
+	public void setBean(T bean) {
+		this.bean = bean;
+	}
+
+	public Sort getAsc() {
+		return asc;
+	}
+
+	public void setAsc(Sort asc) {
+		this.asc = asc;
+	}
+
+	public Sort getDesc() {
+		return desc;
+	}
+
+	public void setDesc(Sort desc) {
+		this.desc = desc;
+	}
 
 	public int getPage() {
 		return page;
@@ -55,17 +81,8 @@ public class PageInfo {
 	 */
 	public static class Sort {
 
-		public static final String ASC_SORT = "ASC";
-
-		public static final String DESC_SORT = "DESC";
-
 		private String[] fields;
 
-		private String direction = "asc";
-
-		public boolean isAsc() {
-			return ASC_SORT.equalsIgnoreCase(direction);
-		}
 
 		public String[] getFields() {
 			return fields;
@@ -74,15 +91,6 @@ public class PageInfo {
 		public void setFields(String[] fields) {
 			this.fields = fields;
 		}
-
-		public String getDirection() {
-			return direction;
-		}
-
-		public void setDirection(String direction) {
-			this.direction = direction;
-		}
-
 	}
 
 }

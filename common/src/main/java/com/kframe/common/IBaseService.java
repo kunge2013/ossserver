@@ -1,10 +1,11 @@
 package com.kframe.common;
 
-import org.springframework.data.domain.Page;
+import com.kframe.bean.PageData;
+import com.kframe.bean.PageInfo;
 
 public interface IBaseService<T, ID> {
 
 	
-	Page<T> queryPage(PageInfo pageinfo, T t);
+	PageData<T> queryPage(PageInfo<T> pageinfo);
 	
 }
