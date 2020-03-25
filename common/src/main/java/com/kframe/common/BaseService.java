@@ -31,14 +31,14 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 
 	protected BaseRepostory<T, ID> repository;
 
-	public BaseService(BaseRepostory repository) {
+	public BaseService( BaseRepostory repository ) {
 		this.repository = repository;
 	}
 
 	@Resource
 	protected EntityManager entityManager;
 
-	public final PageData<T> queryPage(PageInfo<T> pageinfo) {
+	public final PageData<T> queryPage( PageInfo<T> pageinfo ) {
 		Pageable pageable = null;
 		if (pageinfo.fetchQuerySorts() == null) {
 			pageable = PageRequest.of(pageinfo.getPage(), pageinfo.getSize());
@@ -53,7 +53,7 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 		return PageData.from(pageinfo, page.getContent(), page.getTotalElements());
 	}
 
-	protected Specification<T> createSpecification(T t) {
+	protected Specification<T> createSpecification( T t ) {
 		Specification<T> specification = new Specification<T>() {
 			/**
 			 * 
@@ -70,7 +70,7 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 		return specification;
 	}
 
-	public <F> Page<F> pageBySql(F f) {
+	public <F> Page<F> pageBySql( F f ) {
 		return null;
 	}
 
@@ -80,7 +80,7 @@ public abstract class BaseService<T, ID> implements IBaseService<T, ID> {
 	 * @param query  查询
 	 * @param params 参数
 	 */
-	protected void setParameters(Query query, Map<String, Object> params) {
+	protected void setParameters( Query query, Map<String, Object> params ) {
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			query.setParameter(entry.getKey(), entry.getValue());
 		}

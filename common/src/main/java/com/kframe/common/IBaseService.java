@@ -6,6 +6,6 @@ import com.kframe.bean.PageInfo;
 public interface IBaseService<T, ID> {
 
 	
-	PageData<T> queryPage(PageInfo<T> pageinfo);
+	PageData<T> queryPage( PageInfo<T> pageinfo );
 	
 }
